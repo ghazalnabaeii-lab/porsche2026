@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        *, *::before, *::after {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body {
+            min-height:2100vh;
+            background:rgb(3, 3, 3);
+        }
+        .m1{
+            width: 40px;
+            height: 40px;
+            border: 2px solid white;
+            position: fixed;
+            transform: translate(-50%,-50%);
+            z-index: 999;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .m2{
+            width: 10px;
+            height: 10px;
+            background-color: white;
+            border-radius: 50%;
+            position: fixed;
+            transition: .4s ease-out;
+            transform: translate(-50%,-50%);
+            z-index: 999;
+            pointer-events: none;
+        }
+        #sec1{
+            width: 100%;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            overflow: hidden;
+            transition: .3s ease-out;
+            z-index: 10;
+        }
+        #sec1 > video{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;left: 0;
+            scale: 1.4;
+            object-fit: cover;
+        }
+        #sec2{
+            width: 100%;
+            height: 130vh;
+            background-image: url(img/imgi_55_bg.jpg);  /* حذف اسلش اضافه */
+            background-size: cover;
+            position: fixed;
+            top: 350px;left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9;
+        }
+        #sec2 > h2{
+            width: 30%;
+            color: white;
+            text-align: center;
+            font-size: 70px;
+            font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+        }
+        #left1{
+            width: 250px;
+            height: 300px;
+            border-radius: 10px;
+            position: absolute;
+            left: 150px;
+            top: 60%;
+            object-fit: cover;
+            opacity: 0;
+            transition: 1s;
+            transform: rotate(-10deg);
+            background: #333; /* fallback */
+        }
+        #left2{
+            width: 250px;
+            height: 300px;
+            border-radius: 10px;
+            position: absolute;
+            top: 50%;
+            left: 150px;
+            object-fit: cover;
+            opacity: 0;
+            transition: 1s;
+            transform: rotate(-10deg);
+            background: #333;
+        }
+        #right1{
+            width: 250px;
+            height: 300px;
+            border-radius: 10px;
+            position: absolute;
+            right: 150px;
+            top: 60%;
+            object-fit: cover;
+            opacity: 0;
+            transition: 1s;
+            transform: rotate(10deg);
+            background: #333;
+        }
+        #right2{
+            width: 250px;
+            height: 300px;
+            border-radius: 10px;
+            position: absolute;
+            right: 150px;
+            top: 60%;
+            object-fit: cover;
+            opacity: 0;
+            transition: 1s;
+            transform: rotate(10deg);
+            background: #333;
+        }
+
+        /* menu1*/
+        .left-menu {
+            position: fixed;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            padding: 20px 10px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .menu-item {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255,255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        .menu-item:hover {
+            background: white;
+            color: black;
+            transform: scale(1.2);
+            border-color: white;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        /* logo  */
+        .center-logo {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            padding: 15px 40px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        .center-logo img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .m1, .m2 {
+            z-index: 1001;
+        }
+
+        /* card*/
+        #sec3{
+            width: 100%;
+            height: 100vh;
+            position: fixed;
+            top: 100px;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 8;
+        }
+        .porsche-card{
+            width: 320px;
+            height: 420px;
+            background: #111;
+            border-radius: 25px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #333;
+            box-shadow: 0 10px 30px rgba(255,0,0,0.1);
+            transition: 0.3s;
+        }
+        .porsche-card:hover{
+            transform: translateY(-10px);
+            border-color: #ff0000;
+            box-shadow: 0 20px 40px rgba(255,0,0,0.3);
+        }
+        .porsche-card .car-bg{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: black;
+            opacity: 0.4;
+            transition: 0.5s;
+        }
+        .porsche-card:hover .car-bg{
+            opacity: 0.7;
+            transform: scale(1.1);
+        }
+        .porsche-card .circle{
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: #ff0000;
+            filter: blur(40px);
+            border-radius: 50%;
+            top: -50px;
+            right: -50px;
+            animation: move 6s infinite;
+        }
+        .porsche-card .circle2{
+            left: -50px;
+            bottom: -50px;
+            background: #0066ff;
+            animation: move 8s infinite reverse;
+        }
+        @keyframes move{
+            50%{ transform: translate(30px,30px) scale(1.2); }
+        }
+        .porsche-card .content{
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            padding: 20px;
+        }
+        .porsche-card .content img{
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid #ff0000;
+            object-fit: cover;
+            margin-bottom: 15px;
+            transition: 0.3s;
+        }
+        .porsche-card:hover .content img{
+            transform: scale(1.1);
+            border-color: #fff;
+        }
+        .porsche-card .content h3{
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+        .porsche-card .content p{
+            color: #ff0000;
+            font-size: 13px;
+            letter-spacing: 2px;
+        }
+        .porsche-card .social{
+            position: absolute;
+            left: -60px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: 0.4s;z-index: 3;
+        }
+        .porsche-card:hover .social{
+            left: 15px;
+        }
+        .porsche-card .social a{
+            width: 40px;
+            height: 40px;
+            background: #222;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            border: 1px solid #444;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: 0.3s;
+        }
+        .porsche-card:hover .social a{
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .porsche-card .social a:nth-child(1){
+            transition-delay: 0.1s;
+        }
+        .porsche-card .social a:nth-child(2){
+            transition-delay: 0.2s;
+        }
+        .porsche-card .social a:nth-child(3){
+            transition-delay: 0.3s;
+        }
+        .porsche-card .social a:hover{
+            background: #ff0000;
+            transform: scale(1.2) rotate(360deg);
+        }
+    </style>
+</head>
+
+<body>
+<div class="m1"></div>
+<div class="m2"></div>
+
+<!--menu-->
+<div class="left-menu">
+    <div class="menu-item"><i class="fas fa-home"></i></div>
+    <div class="menu-item"><i class="fas fa-search"></i></div>
+    <div class="menu-item"><i class="fas fa-bell"></i></div>
+    <div class="menu-item"><i class="fas fa-user"></i></div>
+    <div class="menu-item"><i class="fas fa-cog"></i></div>
+</div>
+
+<!-- logo -->
+<div class="center-logo">
+    <img src="img/logo-porsche.svg" alt="logo">
+</div>
+
+<section id="sec1">
+    <!-- اگه فایل ویدیو نداری، می‌تونی کامنت کنی یا یه رنگ بذاری -->
+    <video src="video/1.mp4" autoplay muted loop></video>
+</section>
+
+<section id="sec2">
+    <h2>Cada detalle cuent y aquí vienen incluidos.</h2>
+    <video id="left2" src="video/left.mp4" autoplay muted loop></video>
+    <img id="left1" src="img/left.jpg" alt="">
+    <img id="right1" src="img/rhght.webp" alt="">
+    <video id="right2" src="video/right.mp4" autoplay muted loop></video>
+</section>
+
+<!--card-->
+<section id="sec3">
+    <div class="porsche-card">
+        <div class="circle"></div>
+        <div class="circle circle2"></div>
+        <div class="car-bg"></div>
+        <div class="social">
+            <!-- درست کردن آیکون‌ها -->
+            <a href="https://github.com/ghazalnabaeii-lab"><i class="fab fa-github"></i></a>
+            <a href="https://www.instagram.com/ghazalnabaei_.web?igsh=MWhmMWUxazZjaXRmaQ=="><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/ghazal-nabaei-519007396/"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <div class="content">
+            <img src="img/-2147483648_-210497.jpg" alt="profile">
+            <h3>Ghazal Nabaei</h3>
+            <p>Frontend Developer</p>  <!-- تایپو رو درست کردم -->
+        </div>
+    </div>
+</section>
+
+<script>
+    // شکلک جای موس
+    const m1 = document.querySelector('.m1')
+    const m2 = document.querySelector('.m2')
+    window.addEventListener('mousemove', (e) => {
+        let x = e.clientX
+        let y = e.clientY
+        m1.style.top = y + 'px'
+        m1.style.left = x + 'px'
+        m2.style.top = y + 'px'
+        m2.style.left = x + 'px'
+    })
+
+    window.addEventListener('mousedown', () => {
+        m1.style.transform = 'translate(-50%,-50%) scale(.7)'
+        m2.style.transform = 'translate(-50%,-50%) scale(1.4)'
+    })
+    window.addEventListener('mouseup', () => {
+        m1.style.transform = 'translate(-50%,-50%) scale(1)'
+        m2.style.transform = 'translate(-50%,-50%) scale(1)'
+    })
+
+    let oldScroll = 0
+    const sec1 = document.getElementById('sec1')
+    const sec2 = document.getElementById('sec2')
+    const sec3 = document.getElementById('sec3')
+    const left1 = document.getElementById('left1')
+    const left2 = document.getElementById('left2')
+    const _right2 = document.getElementById('right2')
+    const _right1 = document.getElementById('right1')
+
+    window.addEventListener('scroll', () => {let st = window.scrollY
+        sec1.style.top = -(st / 4) + 'px'
+
+        // جایگزین computedStyleMap با روش سازگارتر
+        let oldSec2Top = window.getComputedStyle(sec2).top // مثلاً "350px"
+        let oldSec2Value = parseFloat(oldSec2Top) || 350 // عدد خالص
+
+        if (st <= 1800) {
+            if (st > oldScroll) {
+                console.log('down');
+                sec2.style.top = (oldSec2Value - (st / 255)) + 'px'
+            } else {
+                console.log('top');
+                sec2.style.top = (360 - (st * .2)) + 'px'
+            }
+        } else if (st < 6000 && st > 1800) {
+            sec2.style.top = '0px'
+
+            if (st < 5000 && st > 2200) {
+                left2.style.opacity = '0'
+                left1.style.opacity = '1'
+                left1.style.top = (50 - (st / 180)) + '%'
+                left1.style.transform = 'rotate(' + (-10 + (st / 200)) + 'deg)'
+                _right1.style.opacity = '0'
+                _right2.style.opacity = '1'
+                _right2.style.top = (50 - (st / 180)) + '%'
+                _right2.style.transform = 'rotate(' + (10 - (st / 200)) + 'deg)'
+            } else if (st > 5000) {
+                left2.style.opacity = '1'
+                left1.style.opacity = '0'
+                left2.style.top = (50 - (st / 180)) + '%'
+                left2.style.transform = 'rotate(' + (-10 + (st / 200)) + 'deg)'
+                _right2.style.opacity = '0'
+                _right1.style.opacity = '1'
+                _right1.style.top = (50 - (st / 180)) + '%'
+                _right1.style.transform = 'rotate(' + (10 - (st / 200)) + 'deg)'
+            }
+        } else {
+            sec2.style.top = -((st - 6000) / 10) + 'px'
+        }
+
+        oldScroll = st
+    })
+</script>
+</body>
+</html>
